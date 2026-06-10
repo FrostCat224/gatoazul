@@ -1,1 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GatoAzul</title>
+    <style>
+        .game {
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
 
+        .game:hover {
+            background: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+
+<h1>GatoAzul</h1>
+
+<div id="games"></div>
+
+<script>
+fetch("https://frostcat224.github.io/gatoazul/games.json")
+    .then(response => response.json())
+    .then(games => {
+        const container = document.getElementById("games");
+
+        games.forEach(game => {
+            const div = document.createElement("div");
+            div.className = "game";
+
+            div.innerHTML = `
+                <h3>${game.name}</h3>
+                <p>ID: ${game.id}</p>
+                <a href="${game.link}">Play Game</a>
+            `;
+
+            container.appendChild(div);
+        });
+    })
+    .catch(error => {
+        console.error(error);
+        document.getElementById("games").textContent =
+            "Failed to load games.";
+    });
+</script>
+
+</body>
+</html>
